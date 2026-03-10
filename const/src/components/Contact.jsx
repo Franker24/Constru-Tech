@@ -92,31 +92,13 @@ const Contact = () => {
     e.preventDefault();
     if (isFormValid) {
       setStatus('sending');
-      
-      try {
-        const response = await fetch('http://localhost:5000/api/contact', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (response.ok) {
-          setStatus('success');
-          setTimeout(() => {
-            setStatus('idle');
-            setFormData({ nombre: '', email: '', proyecto: tl('specs').vivienda, mensaje: '' });
-            setTouched({ nombre: false, email: false, mensaje: false });
-          }, 4000);
-        } else {
-          throw new Error('Error en la respuesta del servidor');
-        }
-      } catch (error) {
-        console.error("Error al enviar:", error);
+      await new Promise(r => setTimeout(r, 2000));
+      setStatus('success');
+      setTimeout(() => {
         setStatus('idle');
-        alert("No se pudo establecer conexión con el servidor. Verifica que el backend esté corriendo en el puerto 5000.");
-      }
+        setFormData({ nombre: '', email: '', proyecto: tl('specs').vivienda, mensaje: '' });
+        setTouched({ nombre: false, email: false, mensaje: false });
+      }, 4000);
     }
   };
 
@@ -215,6 +197,7 @@ const Contact = () => {
         .spinner { border: 2px solid rgba(0,0,0,0.1); border-top: 2px solid #000; border-radius: 50%; width: 18px; height: 18px; animation: spin 0.8s linear infinite; margin-right: 10px; } 
         input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0.5; }
 
+        /* AJUSTES MOBILE */
         @media (max-width: 1024px) {
           .contact-section { padding: 80px 5% !important; }
           .contact-container { flex-direction: column !important; gap: 60px !important; }
