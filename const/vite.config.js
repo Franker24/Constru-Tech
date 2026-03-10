@@ -10,4 +10,5 @@ export default defineConfig({
       },
     }),
   ],
+  base: '/', // Asegura que las rutas de los assets (JS/CSS) empiecen desde la raíz
 })
